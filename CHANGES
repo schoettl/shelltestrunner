@@ -1,5 +1,6 @@
-1.11 (unreleased)
+1.11 (2025-11-17)
 
+* Build with more recent GHCs, CI updates. (Simon Michael)
 * Fixed: -i1 was not selecting the test if the file contained only one test ([#37], Thomas Miedema)
 
 1.10 (2023-09-12)

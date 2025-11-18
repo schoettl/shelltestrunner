@@ -1,7 +1,7 @@
 cabal-version: 3.0
 name:          shelltestrunner
 -- keep synced: shelltest.hs
-version:       1.10.99
+version:       1.11
 synopsis:      Easy, repeatable testing of CLI programs/commands
 description:
   shelltestrunner (executable: shelltest) is a portable
@@ -48,6 +48,7 @@ extra-source-files:
   tests/format3.windows/*.test
   tests/format3/*.test
   tests/format3/abstract-test-with-macros
+
   tests/format3/one-failing-test
 
 -- These are also copied to haddock docs.

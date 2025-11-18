@@ -32,8 +32,8 @@ Or, build the latest release on any major platform:
 
 |||
 |----------------|---------------------------------------
-| stack:         | **[get stack](https://docs.haskellstack.org)**, **`stack install shelltestrunner-1.10`**
-| cabal:         | **`cabal update; cabal install shelltestrunner-1.10`**
+| stack:         | **[get stack](https://docs.haskellstack.org)**, **`stack install shelltestrunner-1.11`**
+| cabal:         | **`cabal update; cabal install shelltestrunner-1.11`**
 
 ## Usage
 
@@ -96,7 +96,7 @@ There are also some alternate test formats you'll read about below.
 
 <!-- shelltest --help | sed -e '/^shelltest file formats/,$d' -->
 ```
-shelltest 1.10
+shelltest 1.11
 
 shelltest [OPTIONS] [TESTFILES|TESTDIRS]
 
@@ -130,7 +130,6 @@ Print test file:
   -h --help             Display help message
   -V --version          Print version information
      --numeric-version  Print just the version number
-
 ```
     
 `shelltest` accepts one or more test file or directory arguments.
