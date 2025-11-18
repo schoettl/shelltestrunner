@@ -1,0 +1,5 @@
+packages:
+- '.'
+resolver: nightly-2025-09-30
+notify-if-cabal-untested: false
+notify-if-ghc-untested: false
