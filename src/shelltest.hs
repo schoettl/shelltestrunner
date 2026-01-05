@@ -180,7 +180,7 @@ checkArgs :: Args -> IO Args
 checkArgs args = do
   when (null $ testpaths args) $
        warn $ printf "Please specify at least one test file or directory, eg: %s tests" progname
-  when (isJust (actual args) && not (isJust (print_ args))) $
+  when (isJust (actual args) && isNothing (print_ args)) $
        warn "Option --actual can only be used with --print."
   return args
 
