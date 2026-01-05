@@ -8,6 +8,9 @@
 --   may lose other data
 
 module Print
+  ( printShellTest
+  , packResult
+  )
 where
 
 import Import
@@ -99,13 +102,14 @@ printExitStatus False _     (Numeric "0") = return ()
 printExitStatus True prefix (Numeric "0") = printf "%s 0\n" prefix
 printExitStatus _ prefix s = printf "%s %s\n" prefix (show s)
 
-mkEither :: Bool -> a -> Either a a
-mkEither True = Right
-mkEither False = Left
+-- | Wrap result @a@ into 'Either' depending on wether it matches the expected result.
+packResult :: Bool -> a -> Either a a
+packResult True = Right
+packResult False = Left
 
 fromEither :: Either a a -> a
 fromEither = either id id
 
--- | Make a Matcher out of Nothing.
+-- | Return the default 'Matcher' for 'Nothing'.
 justMatcherOutErr :: Maybe Matcher -> Maybe Matcher
 justMatcherOutErr = Just . fromMaybe (Lines 0 "")

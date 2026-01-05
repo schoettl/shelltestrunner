@@ -31,7 +31,7 @@ import Import
 import Utils
 import Types
 import Parse
-import Print
+import Print (printShellTest, packResult)
 import Preprocessor
 
 
@@ -213,7 +213,7 @@ prepareShellTest args st@ShellTest{testname=n,command=c,stdin=i,stdoutExpected=o
   let errorMatch = maybe True (e_actual `matches`) e_expected
   let exitCodeMatch = show x_actual `matches` x_expected
   case print_ args of
-    Just format -> printShellTest format (actual args) st (mkEither outputMatch o_actual) (mkEither errorMatch e_actual) (mkEither exitCodeMatch x_actual)
+    Just format -> printShellTest format (actual args) st (packResult outputMatch o_actual) (packResult errorMatch e_actual) (packResult exitCodeMatch x_actual)
     Nothing -> if (x_actual == 127) -- catch bad executable - should work on posix systems at least
            then ioError $ userError $ unwords $ filter (not . null) [e_actual, printf "Command: '%s' Exit code: %i" cmd x_actual] -- XXX still a test failure; should be an error
            else assertString $ concat $ filter (not . null) [
