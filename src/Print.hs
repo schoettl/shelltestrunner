@@ -90,6 +90,7 @@ printStdouterr _ Nothing                    = return ()
 printStdouterr _ (Just (Lines _ ""))        = return ()
 printStdouterr _ (Just (Numeric _))         = fail "FATAL: Cannot handle Matcher (Numeric) for stdout/stderr."
 printStdouterr _ (Just (NegativeNumeric _)) = fail "FATAL: Cannot handle Matcher (NegativeNumeric) for stdout/stderr."
+printStdouterr ">" (Just (Lines _ s))       = printf "%s" s -- omit the optional ">" in format v3
 printStdouterr prefix (Just (Lines _ s))    = printf "%s\n%s" prefix s
 printStdouterr prefix (Just regex)          = printf "%s %s\n" prefix (show regex)
 
