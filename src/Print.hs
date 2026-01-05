@@ -24,40 +24,40 @@ printShellTest
   :: String               -- ^ Shelltest format. Value of option @--print[=FORMAT]@.
   -> Maybe String         -- ^ Value of option @--actual[=MODE]@. @Nothing@ if option is not given.
   -> ShellTest            -- ^ Test to print
-  -> Either String String -- ^ Non-matching or matching stdout
-  -> Either String String -- ^ Non-matching or matching stderr
-  -> Either Int Int       -- ^ Non-matching or matching exit status
+  -> Either String String -- ^ Actual stdout, non-matching or matching
+  -> Either String String -- ^ Actual stderr, non-matching or matching
+  -> Either Int Int       -- ^ Actual exit status, non-matching or matching
   -> IO ()
 printShellTest format actualMode ShellTest{command=c,stdin=i,comments=comments,trailingComments=trailingComments,
                stdoutExpected=o_expected,stderrExpected=e_expected,exitCodeExpected=x_expected}
                o_actual e_actual x_actual = do
-          (o,e,x) <- computeResults actualMode
-          case format of
-            "v1" -> do
-              printComments comments
-              printCommand "" c
-              printStdin "<<<" i
-              printStdouterr ">>>" $ justMatcherOutErr o
-              printStdouterr ">>>2" $ justMatcherOutErr e
-              printExitStatus True ">>>=" x
-              printComments trailingComments
-            "v2" -> do
-              printComments comments
-              printStdin "<<<" i
-              printCommand "$$$ " c
-              printStdouterr ">>>" o_expected
-              printStdouterr ">>>2" e_expected
-              printExitStatus False ">>>=" x_expected
-              printComments trailingComments
-            "v3" -> do
-              printComments comments
-              printStdin "<" i
-              printCommand "$ "  c
-              printStdouterr ">" o_expected
-              printStdouterr ">2" e_expected
-              printExitStatus False ">=" x_expected
-              printComments trailingComments
-            _ -> fail $ "Unsupported --print format: " ++ format
+  (o,e,x) <- computeResults actualMode
+  case format of
+    "v1" -> do
+      printComments comments
+      printCommand "" c
+      printStdin "<<<" i
+      printStdouterr ">>>" $ justMatcherOutErr o
+      printStdouterr ">>>2" $ justMatcherOutErr e
+      printExitStatus True ">>>=" x
+      printComments trailingComments
+    "v2" -> do
+      printComments comments
+      printStdin "<<<" i
+      printCommand "$$$ " c
+      printStdouterr ">>>" o_expected
+      printStdouterr ">>>2" e_expected
+      printExitStatus False ">>>=" x_expected
+      printComments trailingComments
+    "v3" -> do
+      printComments comments
+      printStdin "<" i
+      printCommand "$ "  c
+      printStdouterr ">" o_expected
+      printStdouterr ">2" e_expected
+      printExitStatus False ">=" x_expected
+      printComments trailingComments
+    _ -> fail $ "Unsupported --print format: " ++ format
   where
     computeResults :: Maybe String -> IO (Maybe Matcher, Maybe Matcher, Matcher)
     computeResults Nothing = do
