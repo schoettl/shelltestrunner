@@ -45,23 +45,22 @@ printShellTest format actualMode ShellTest{command=c,stdin=i,comments=comments,t
       printComments comments
       printStdin "<<<" i
       printCommand "$$$ " c
-      printStdouterr ">>>" o_expected
-      printStdouterr ">>>2" e_expected
-      printExitStatus False ">>>=" x_expected
+      printStdouterr ">>>" $ justMatcherOutErr o
+      printStdouterr ">>>2" $ justMatcherOutErr e
+      printExitStatus False ">>>=" x
       printComments trailingComments
     "v3" -> do
       printComments comments
       printStdin "<" i
       printCommand "$ "  c
-      printStdouterr ">" o_expected
-      printStdouterr ">2" e_expected
-      printExitStatus False ">=" x_expected
+      printStdouterr ">" $ justMatcherOutErr o
+      printStdouterr ">2" $ justMatcherOutErr e
+      printExitStatus False ">=" x
       printComments trailingComments
     _ -> fail $ "Unsupported --print format: " ++ format
   where
     computeResults :: Maybe String -> IO (Maybe Matcher, Maybe Matcher, Matcher)
-    computeResults Nothing = do
-          return (o_expected, e_expected, x_expected)
+    computeResults Nothing = return (o_expected, e_expected, x_expected)
     computeResults (Just mode)
      | mode `isPrefixOf` "all" = return
          (Just $ Lines 0 $ fromEither o_actual
